@@ -1,0 +1,22 @@
+{
+  "common_grid_width_px": 285,
+  "common_grid_height_px": 355,
+  "uv_mapping": {
+    "resize_scale_x": 0.9076433121019108,
+    "resize_scale_y": 0.9102564102564102,
+    "angle_deg": 1.5,
+    "shift_y_px": 1.3,
+    "shift_x_px": -3.25
+  },
+  "nir_crop_origin_native_px": [
+    1079,
+    3
+  ],
+  "nir_similarity_common_to_cropped_native": {
+    "scale": 8.4269951607774,
+    "rotation_deg": 0.08596964176050484,
+    "tx": 8.313634539011446,
+    "ty": 3.2309043835467888
+  },
+  "note": "NIR crop is a native-pixel field of view corresponding to the UV common grid; it is not resized to 285 x 355 pixels."
+}
