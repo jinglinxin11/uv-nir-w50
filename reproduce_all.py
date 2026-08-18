@@ -9,10 +9,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SCRIPTS = [
     ROOT / "src" / "prepare_nir_crop.py",
+    # Hashes are written after the deterministic derived crop is refreshed.
+    ROOT / "src" / "build_release_metadata.py",
     ROOT / "src" / "run_analysis.py",
+    ROOT / "src" / "run_robustness.py",
     ROOT / "src" / "make_single_figures.py",
     ROOT / "src" / "make_supplementary_and_maintext_figures.py",
     ROOT / "src" / "make_figure4f_roi_workflow.py",
+    ROOT / "verify_release.py",
 ]
 
 

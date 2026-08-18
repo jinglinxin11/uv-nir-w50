@@ -14,7 +14,7 @@ def main():
     reg=json.loads((CFG/'registration.json').read_text(encoding='utf-8'))
     t=reg['nir_similarity_common_to_cropped_native']; transform=core.Similarity(t['scale'],t['rotation_deg'],t['tx'],t['ty'])
     baseline={**reg['uv_mapping'], 'common_grid_width_px': reg['common_grid_width_px'], 'common_grid_height_px': reg['common_grid_height_px']}
-    uv=load(DATA/'UV_248T.tif'); nir=load(DATA/'NIR_highres_cropped_to_UV_FOV.tif'); rois=pd.read_csv(CFG/'M4_5X_ROIs.csv').to_dict('records')
+    uv=load(DATA/'UV_248T.tif'); nir=load(DATA/'NIR_highres_cropped_to_UV_FOV.tif'); rois=pd.read_csv(CFG/'transects.csv').to_dict('records')
     uv_scale=1/math.sqrt(baseline['resize_scale_x']*baseline['resize_scale_y'])
     uvmap=core.rgb_channel_maps(uv,8*uv_scale)['Lab_a']; nirmap=core.rgb_channel_maps(nir,8*transform.scale)['Lab_a']
     d=np.arange(-core.PROFILE_HALF_LENGTH_REF,core.PROFILE_HALF_LENGTH_REF+core.PROFILE_STEP_REF/2,core.PROFILE_STEP_REF)

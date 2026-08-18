@@ -14,12 +14,12 @@ def save(fig,name):
     plt.close(fig)
 def style(): plt.rcParams.update({'font.family':'Arial','font.size':9,'svg.fonttype':'none'})
 def main():
-    style(); m=pd.read_csv(TAB/'measurements.csv'); p=pd.read_csv(TAB/'profiles.csv'); rois=pd.read_csv(CFG/'M4_5X_ROIs.csv'); s=pd.read_csv(TAB/'summary.csv').iloc[0]
+    style(); m=pd.read_csv(TAB/'measurements.csv'); p=pd.read_csv(TAB/'profiles.csv'); rois=pd.read_csv(CFG/'transects.csv'); s=pd.read_csv(TAB/'summary.csv').iloc[0]
     # Standalone ROI-location image
     img=np.asarray(Image.open(DATA/'NIR_976-T_display.tif').convert('RGB')); fig,ax=plt.subplots(figsize=(5,6)); ax.imshow(img)
     for i,r in rois.iterrows():
       x,y=r.center_x,r.center_y; a=np.deg2rad(r.normal_angle_deg); dx,dy=22*np.cos(a),22*np.sin(a); ax.plot([x-dx,x+dx],[y-dy,y+dy],color=CYAN,lw=2); ax.plot(x,y,'o',mfc='white',mec=CYAN,mew=1.5); ax.text(x+5,y-7,f'X{i+1:02d}',color=CYAN,weight='bold')
-    ax.set(title='Registered-image ROI locations'); ax.set_xlabel('Reference-grid X (px)'); ax.set_ylabel('Reference-grid Y (px)'); save(fig,'Fig_S9_ROI_locations')
+    ax.set(title='Registered-image ROI locations'); ax.set_xlabel('Reference-grid X (px)'); ax.set_ylabel('Reference-grid Y (px)'); save(fig,'Supporting_ROI_locations')
     # Every technical profile separately
     for i,roi in enumerate(rois.ROI_ID,1):
       fig,ax=plt.subplots(figsize=(5.2,3.6))
@@ -30,7 +30,7 @@ def main():
     roi=rois.ROI_ID.iloc[3]; fig,ax=plt.subplots(figsize=(5.4,3.8))
     for cond,c in [('UV',UV),('NIR',NIR)]:
       q=p[(p.ROI_ID==roi)&(p.condition==cond)].sort_values('distance_reference_px'); mm=m[(m.ROI_ID==roi)&(m.condition==cond)].iloc[0]; ax.plot(q.distance_reference_px,q.normalized,c=c,lw=2,label=f'{cond} W50={mm.FWHM:.2f} px'); ax.annotate('',(mm.x50_left,.45),(mm.x50_right,.45),arrowprops={'arrowstyle':'<->','color':c})
-    ax.axhline(.5,color='0.4',ls='--'); ax.set(xlabel='Transverse position (reference px)',ylabel='Normalized Lab a* intensity',title='Representative W50 extraction (X04)'); ax.legend(frameon=False); ax.spines[['top','right']].set_visible(False); save(fig,'Fig_S10_representative_W50_X04')
+    ax.axhline(.5,color='0.4',ls='--'); ax.set(xlabel='Transverse position (reference px)',ylabel='Normalized Lab a* intensity',title='Representative W50 extraction (X04)'); ax.legend(frameon=False); ax.spines[['top','right']].set_visible(False); save(fig,'Figure_S10_representative_W50_X04')
     # Paired width plot
     fig,ax=plt.subplots(figsize=(5.2,4)); piv=m.pivot(index='ROI_ID',columns='condition',values='FWHM');
     label_offset=[0.70,-0.55,0.85,0.15,0.60]

@@ -1,0 +1,12 @@
+{
+  "crop_shape_yx": [
+    2994,
+    2406
+  ],
+  "crop_origin_xy": [
+    1079,
+    3
+  ],
+  "output": "data\\NIR_highres_cropped_to_UV_FOV.tif",
+  "native_source_pixels_preserved": true
+}

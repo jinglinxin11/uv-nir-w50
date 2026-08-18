@@ -28,7 +28,7 @@ def draw_rois(ax,rois):
     for i,r in rois.iterrows():
       a=np.deg2rad(r.normal_angle_deg); x,y=r.center_x,r.center_y; dx,dy=8*np.cos(a),8*np.sin(a); ax.plot([x-dx,x+dx],[y-dy,y+dy],c=CYAN,lw=1.8); ax.plot(x,y,'o',mfc='white',mec=CYAN,mew=1.2); ax.text(x+4,y-5,f'X{i+1:02d}',c=CYAN,fontsize=7,weight='bold')
 def main():
-  setup(); _,base,t=transform(); rois=pd.read_csv(CFG/'M4_5X_ROIs.csv'); m=pd.read_csv(TAB/'measurements.csv'); p=pd.read_csv(TAB/'profiles.csv'); s=pd.read_csv(TAB/'summary.csv').iloc[0]
+  setup(); _,base,t=transform(); rois=pd.read_csv(CFG/'transects.csv'); m=pd.read_csv(TAB/'measurements.csv'); p=pd.read_csv(TAB/'profiles.csv'); s=pd.read_csv(TAB/'summary.csv').iloc[0]
   uv=uv_common(rgb(DATA/'UV_248T.tif'),base); nir=rgb(DATA/'NIR_976-T_display.tif')
   # RGB and matching local Lab-a display panels
   for name,img,title in [('Fig_Main_UV_RGB_ROIs',uv,'248 nm UV'),('Fig_Main_NIR_RGB_ROIs',nir,'976 nm NIR')]:
@@ -62,12 +62,12 @@ def main():
       q=sens[(sens.condition.eq(cond))&(sens.ROI_ID.eq(roi))].sort_values('sigma_ref_px'); ax2.plot(q.sigma_ref_px,q.peak_to_noise,c=col,alpha=.38); ax2.scatter(q.sigma_ref_px,q.peak_to_noise,c=col,s=12)
   for ax,title in [(ax1,'(a) Primary measurements'),(ax2,'(b) Smoothing settings')]:
     ax.axhline(3,c='0.35',ls='--'); ax.set_title(title); ax.spines[['top','right']].set_visible(False); ax.grid(axis='y',color=GRID)
-  ax1.set(xticks=np.arange(1,6),xticklabels=[f'X{i:02d}' for i in range(1,6)],ylabel='Peak-to-noise ratio'); ax1.legend(frameon=False,ncol=2,fontsize=8); ax2.set(xlabel='Gaussian σ (reference px)'); fig.suptitle('Figure S11. PNR validity checks',y=1.02); fig.tight_layout(); save(fig,'Fig_S11_PNR_validity')
+  ax1.set(xticks=np.arange(1,6),xticklabels=[f'X{i:02d}' for i in range(1,6)],ylabel='Peak-to-noise ratio'); ax1.legend(frameon=False,ncol=2,fontsize=8); ax2.set(xlabel='Gaussian σ (reference px)'); fig.suptitle('Figure S11. PNR validity checks',y=1.02); fig.tight_layout(); save(fig,'Figure_S11_PNR_validity')
   baseline=sens[sens.sigma_ref_px.eq(.75)].set_index(['condition','ROI_ID']).FWHM
   for cond,col in [('UV',UV),('NIR',NIR)]:
     fig,ax=plt.subplots(figsize=(5.1,3.7))
     for i,roi in enumerate(order,1):
       q=sens[(sens.condition.eq(cond))&(sens.ROI_ID.eq(roi))].sort_values('sigma_ref_px'); y=[100*(v/baseline[(cond,roi)]-1) for v in q.FWHM]; ax.plot(q.sigma_ref_px,y,marker='o',label=f'X{i:02d}')
-    ax.axvline(.75,c='0.35',ls='--'); ax.axhline(0,c='0.55',lw=.8); ax.set(xlabel='Gaussian σ (reference px)',ylabel='Change from σ = 0.75 (%)',title=f'Figure S12. {cond} smoothing sensitivity'); ax.legend(frameon=False,ncol=3,fontsize=8); ax.spines[['top','right']].set_visible(False); ax.grid(axis='y',color=GRID); save(fig,f'Fig_S12_smoothing_{cond}')
+    ax.axvline(.75,c='0.35',ls='--'); ax.axhline(0,c='0.55',lw=.8); ax.set(xlabel='Gaussian σ (reference px)',ylabel='Change from σ = 0.75 (%)',title=f'Figure S12. {cond} smoothing sensitivity'); ax.legend(frameon=False,ncol=3,fontsize=8); ax.spines[['top','right']].set_visible(False); ax.grid(axis='y',color=GRID); save(fig,f'Figure_S12_smoothing_{cond}')
   summary=sens.groupby(['sigma_ref_px','condition']).FWHM.mean().unstack(); summary['Gx']=summary.UV/summary.NIR; summary.to_csv(TAB/'smoothing_summary.csv')
 if __name__=='__main__': main()

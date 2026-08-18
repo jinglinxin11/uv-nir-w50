@@ -23,7 +23,7 @@ OUT = ROOT / "results" / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
 
 IMAGE_PATH = ROOT / "data" / "NIR_976-T_display.tif"
-ROI_PATH = ROOT / "config" / "M4_5X_ROIs.csv"
+ROI_PATH = ROOT / "config" / "transects.csv"
 
 CYAN = "#009FCD"
 CYAN_FILL = "#8FD7E9"
@@ -55,9 +55,8 @@ def read_rois(path: Path):
         rows = list(csv.DictReader(f))
     selected = []
     for row in rows:
-        if row["selected"].strip().lower() == "true":
             selected.append({
-                "id": row["selected_ID"],
+                "id": row.get("selected_ID", row["ROI_ID"]),
                 "x": float(row["center_x"]),
                 "y": float(row["center_y"]),
                 "normal": float(row["normal_angle_deg"]),

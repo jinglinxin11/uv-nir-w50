@@ -1,0 +1,8 @@
+# Tested release environment (Python 3.12.13, Windows).
+numpy==2.3.5
+pandas==3.0.1
+Pillow==12.3.0
+opencv-contrib-python-headless==5.0.0
+matplotlib==3.11.1
+scipy==1.18.0
+scikit-image==0.26.0

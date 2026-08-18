@@ -8,6 +8,12 @@
     "shift_y_px": 1.3,
     "shift_x_px": -3.25
   },
+  "nir_similarity_common_to_original_native": {
+    "scale": 8.4269951607774,
+    "rotation_deg": 0.08596964176050484,
+    "tx": 1087.3136345390114,
+    "ty": 6.230904383546789
+  },
   "nir_crop_origin_native_px": [
     1079,
     3
@@ -18,5 +24,5 @@
     "tx": 8.313634539011446,
     "ty": 3.2309043835467888
   },
-  "note": "NIR crop is a native-pixel field of view corresponding to the UV common grid; it is not resized to 285 x 355 pixels."
+  "note": "Native source pixels are preserved during cropping; no additional resampling, sharpening, deconvolution, or super-resolution is applied."
 }

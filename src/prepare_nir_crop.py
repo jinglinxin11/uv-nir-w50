@@ -20,26 +20,27 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "NIR_highres_unsharpened_original.jpg"
 OUT = ROOT / "data" / "NIR_highres_cropped_to_UV_FOV.tif"
 REG = ROOT / "config" / "registration.json"
-COMMON_W, COMMON_H = 285, 355
-TRANSFORM = Similarity(8.4269951607774, 0.08596964176050484, 1087.3136345390114, 6.230904383546789)
 
 def main() -> None:
     image = np.asarray(Image.open(RAW).convert("RGB"), dtype=np.uint8)
-    x = np.array([0, COMMON_W - 1, 0, COMMON_W - 1], float)
-    y = np.array([0, 0, COMMON_H - 1, COMMON_H - 1], float)
-    hx, hy = TRANSFORM.map(x, y)
+    reg = json.loads(REG.read_text(encoding="utf-8"))
+    common_w, common_h = int(reg["common_grid_width_px"]), int(reg["common_grid_height_px"])
+    source = reg["nir_similarity_common_to_original_native"]
+    transform = Similarity(source["scale"], source["rotation_deg"], source["tx"], source["ty"])
+    x = np.array([0, common_w - 1, 0, common_w - 1], float)
+    y = np.array([0, 0, common_h - 1, common_h - 1], float)
+    hx, hy = transform.map(x, y)
     pad = 3
     x0, x1 = max(0, int(np.floor(hx.min())) - pad), min(image.shape[1], int(np.ceil(hx.max())) + pad + 1)
     y0, y1 = max(0, int(np.floor(hy.min())) - pad), min(image.shape[0], int(np.ceil(hy.max())) + pad + 1)
     Image.fromarray(image[y0:y1, x0:x1]).save(OUT, compression="tiff_lzw")
-    reg = {
-        "common_grid_width_px": COMMON_W, "common_grid_height_px": COMMON_H,
-        "uv_mapping": {"resize_scale_x": 0.9076433121019108, "resize_scale_y": 0.9102564102564102, "angle_deg": 1.5, "shift_y_px": 1.3, "shift_x_px": -3.25},
-        "nir_crop_origin_native_px": [x0, y0],
-        "nir_similarity_common_to_cropped_native": {"scale": TRANSFORM.scale, "rotation_deg": TRANSFORM.rotation_deg, "tx": TRANSFORM.tx - x0, "ty": TRANSFORM.ty - y0},
-        "note": "NIR crop is a native-pixel field of view corresponding to the UV common grid; it is not resized to 285 x 355 pixels."
-    }
+    reg["nir_crop_origin_native_px"] = [x0, y0]
+    reg["nir_similarity_common_to_cropped_native"] = {"scale": transform.scale, "rotation_deg": transform.rotation_deg, "tx": transform.tx - x0, "ty": transform.ty - y0}
+    reg["note"] = "Native source pixels are preserved during cropping; no additional resampling, sharpening, deconvolution, or super-resolution is applied."
     REG.write_text(json.dumps(reg, indent=2), encoding="utf-8")
-    print(json.dumps({"crop_shape_yx": [y1-y0, x1-x0], "crop_origin_xy": [x0,y0]}, indent=2))
+    manifest = {"crop_shape_yx": [y1-y0, x1-x0], "crop_origin_xy": [x0,y0], "output": str(OUT.relative_to(ROOT)), "native_source_pixels_preserved": True}
+    (ROOT / "results" / "tables").mkdir(parents=True, exist_ok=True)
+    (ROOT / "results" / "tables" / "crop_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    print(json.dumps(manifest, indent=2))
 
 if __name__ == "__main__": main()
