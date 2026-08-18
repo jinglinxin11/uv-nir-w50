@@ -217,8 +217,6 @@ def build():
 
     stem = OUT / "Figure4f_ROI_selection_transverse_width_workflow"
     fig.savefig(stem.with_suffix(".png"), dpi=600, facecolor="white")
-    fig.savefig(stem.with_suffix(".svg"), facecolor="white")
-    fig.savefig(stem.with_suffix(".pdf"), facecolor="white")
     plt.close(fig)
 
 

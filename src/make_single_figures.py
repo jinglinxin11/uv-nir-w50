@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]; DATA=ROOT/'data'; OUT=ROOT/'results'/'
 UV='#D55E00'; NIR='#0072B2'; CYAN='#009ECA'
 def save(fig,name):
     OUT.mkdir(parents=True,exist_ok=True)
-    for ext,dpi in [('png',450),('svg',None)]: fig.savefig(OUT/f'{name}.{ext}',dpi=dpi,bbox_inches='tight',facecolor='white')
+    fig.savefig(OUT/f'{name}.png', dpi=450, bbox_inches='tight', facecolor='white')
     plt.close(fig)
 def style(): plt.rcParams.update({'font.family':'Arial','font.size':9,'svg.fonttype':'none'})
 def main():

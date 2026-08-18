@@ -14,4 +14,4 @@ python src/run_analysis.py
 python src/make_single_figures.py
 ```
 
-All figures are exported as standalone PNG and editable SVG files. No raw image is sharpened, deconvolved, generatively edited, or overwritten. Five technical transects are nested within four parent spatial ROIs; the reported values describe one registered image pair and are not independent-sample statistics. `Gx` is the ratio of the UV and NIR mean apparent W50 values, not a direct measurement of storage capacity, pitch, or bit-error rate.
+All figures are exported as standalone PNG files. No raw image is sharpened, deconvolved, generatively edited, or overwritten. Five technical transects are nested within four parent spatial ROIs; the reported values describe one registered image pair and are not independent-sample statistics. `Gx` is the ratio of the UV and NIR mean apparent W50 values, not a direct measurement of storage capacity, pitch, or bit-error rate.
