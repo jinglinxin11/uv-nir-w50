@@ -110,8 +110,10 @@ Widths are reported in common-reference-grid apparent pixels. The five technical
 | --- | --- | --- |
 | `Fig_S9_ROI_locations.png` and `Fig_S9_profile_X01–X05.png` | `src/make_single_figures.py` | ROI CSV, display image, `profiles.csv`, `measurements.csv` |
 | `Fig_S10_representative_W50_X04.png` | `src/make_single_figures.py` | `profiles.csv`, `measurements.csv` |
-| `Fig_S11_paired_W50.png` | `src/make_single_figures.py` | `measurements.csv`, `summary.csv` |
-| `Fig_S12_Gx_proxy.png` | `src/make_single_figures.py` | `summary.csv` |
+| `Fig_S11_PNR_validity.png` | `src/make_supplementary_and_maintext_figures.py` | `measurements.csv`, `smoothing_sensitivity.csv` |
+| `Fig_S12_smoothing_UV.png` and `Fig_S12_smoothing_NIR.png` | `src/make_supplementary_and_maintext_figures.py` | `smoothing_sensitivity.csv`, `smoothing_summary.csv` |
+| `Fig_Main_paired_W50.png` and `Fig_Main_Gx_proxy.png` | `src/make_single_figures.py` | `measurements.csv`, `summary.csv` |
+| `Fig_Main_UV_RGB_ROIs.png`, `Fig_Main_NIR_RGB_ROIs.png`, `Fig_Main_UV_local_Lab_a.png`, `Fig_Main_NIR_local_Lab_a.png`, and `Fig_Main_center_aligned_profiles.png` | `src/make_supplementary_and_maintext_figures.py` | released images, ROI CSV, `profiles.csv`, and `measurements.csv` |
 | `Figure4f_ROI_selection_transverse_width_workflow.png` | `src/make_figure4f_roi_workflow.py` | display image and ROI CSV; panel (c) is an explicitly illustrative measurement schematic |
 
 ## Environment

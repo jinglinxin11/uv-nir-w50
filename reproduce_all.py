@@ -11,6 +11,7 @@ SCRIPTS = [
     ROOT / "src" / "prepare_nir_crop.py",
     ROOT / "src" / "run_analysis.py",
     ROOT / "src" / "make_single_figures.py",
+    ROOT / "src" / "make_supplementary_and_maintext_figures.py",
     ROOT / "src" / "make_figure4f_roi_workflow.py",
 ]
 
