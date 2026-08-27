@@ -342,11 +342,32 @@ def feature_validation(ref_rgb: np.ndarray, warped_high_rgb: np.ndarray) -> dict
         pred = cv2.transform(p1[:, None, :], mat)[:, 0, :]
         residual = np.linalg.norm(pred - p2, axis=1)
         inlier_mask = inliers.ravel().astype(bool)
+        singular_values = np.linalg.svd(mat[:, :2], compute_uv=False)
+        inlier_span = np.ptp(p1[inlier_mask], axis=0) if inlier_mask.any() else np.zeros(2)
+        residual_rotation_deg = float(math.degrees(math.atan2(mat[1, 0], mat[0, 0])))
+        residual_translation_norm = float(np.linalg.norm(mat[:, 2]))
+        degenerate = bool(
+            singular_values.min() < 0.5
+            or singular_values.max() > 2.0
+            or inlier_span.min() < 10.0
+        )
+        near_identity = bool(
+            np.max(np.abs(singular_values - 1.0)) <= 0.05
+            and abs(residual_rotation_deg) <= 1.0
+            and residual_translation_norm <= 3.0
+        )
         out[method] = {
             "keypoints_reference": len(k1), "keypoints_warped": len(k2), "matches": len(good),
             "ransac_inliers": int(inlier_mask.sum()), "median_residual_common_px": float(np.median(residual[inlier_mask])) if inlier_mask.any() else None,
             "p95_residual_common_px": float(np.percentile(residual[inlier_mask], 95)) if inlier_mask.any() else None,
             "residual_affine_reference_to_warped": mat.tolist(),
+            "affine_singular_values": singular_values.tolist(),
+            "residual_rotation_deg": residual_rotation_deg,
+            "residual_translation_norm_common_px": residual_translation_norm,
+            "inlier_span_reference_px": inlier_span.tolist(),
+            "degenerate_transform": degenerate,
+            "residual_transform_near_identity": near_identity,
+            "ransac_valid": bool(inlier_mask.sum() >= 4 and not degenerate and near_identity),
         }
     shift, response = cv2.phaseCorrelate(ref.astype(np.float32), mov.astype(np.float32))
     out["phase_correlation_residual"] = {"shift_x_common_px": float(shift[0]), "shift_y_common_px": float(shift[1]), "response": float(response)}

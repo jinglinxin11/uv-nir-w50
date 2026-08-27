@@ -1,7 +1,7 @@
 numpy
 pandas
 Pillow
-opencv-python
+opencv-contrib-python-headless
 matplotlib
 scipy
 scikit-image

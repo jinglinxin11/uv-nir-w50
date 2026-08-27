@@ -12,10 +12,12 @@ def main():
   h,rel=line.split('  ',1); checks[rel]=sha(ROOT/rel)==h
  if not all(checks.values()): raise RuntimeError(f'Input hashes failed: {checks}')
  tr=pd.read_csv(ROOT/'config'/'transects.csv'); m=pd.read_csv(T/'measurements.csv'); s=pd.read_csv(T/'summary.csv').iloc[0]; rb=pd.read_csv(T/'robustness_summary.csv')
+ reg=json.loads((T/'registration_reconstruction.json').read_text(encoding='utf-8'))
+ if not reg.get('overall_pass') or not all(reg.get('checks',{}).values()): raise RuntimeError('Registration reconstruction/validation failed')
  if len(tr)!=5 or tr.parent_ID.nunique()!=4: raise RuntimeError('Fixed transect check failed')
  if len(m)!=10 or not m.valid.all() or not (m.peak_to_noise>=3).all(): raise RuntimeError('Measurement validity check failed')
  for k,v in EXPECTED.items():
   if not np.isclose(float(s[k]),v,rtol=0,atol=ABS_TOL): raise RuntimeError(f'{k} mismatch: {s[k]} vs {v}')
  if len(rb)!=8: raise RuntimeError('Robustness summary must contain 4 smoothing and 4 leave-one-parent rows')
- print('Input hashes: PASS\nFixed transects: 5\nValid measurements: 10/10\nNumerical validation: PASS\nRobustness outputs: PASS\n\nReproduction verified.')
+ print('Input hashes: PASS\nRegistration reconstruction: PASS\nRegistration quality controls: PASS\nFixed transects: 5\nValid measurements: 10/10\nNumerical validation: PASS\nRobustness outputs: PASS\n\nReproduction verified.')
 if __name__=='__main__': main()
