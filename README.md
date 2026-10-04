@@ -14,10 +14,11 @@ The released analysis uses five fixed X-direction technical transects nested in 
 | `data/NIR_976-T_display.tif` | Common-grid registration reference and display/localization image; not used for quantitative NIR profiles |
 | `config/registration.json` | Authoritative stored UV and NIR coordinate transforms |
 | `config/transects.csv` | Input-only frozen geometry for X01–X05; it has no W50, PNR, or gain outcome columns |
-| `provenance/ROI_selection_records.csv` | Full frozen ROI-selection record retained for audit, including historical screening/outcome fields |
 | `provenance/input_checksums.sha256` | SHA-256 hashes verified by `verify_release.py` |
 
 `src/prepare_nir_crop.py` reads the NIR transform from `config/registration.json` and regenerates the cropped TIFF without an additional interpolation step. The crop manifest is written to `results/tables/crop_manifest.json`.
+
+`config/transects.csv` is the sole released transect input. X01-X05 correspond, in row order, to ROI IDs M4_002, M4_005, M4_008, M4_010 and M4_011. The fixed locations were constructed from skeleton-derived candidates and hierarchical sub-ROIs, with normal directions within 15 degrees of the reference-grid X axis. X04 and X05 share parent ROI M0_004. The tangent displacement recorded for X04 (-10 reference pixels) is already incorporated in its final centre coordinates and is not applied again during sampling. The release imports these locations rather than selecting them anew; complete candidate-generation history and evidence of selection before inspection of results are not available, so the design is described as fixed rather than prospectively prespecified.
 
 ## One-command reproduction
 
@@ -69,7 +70,7 @@ All released figure outputs are PNG files. The manuscript and word-processing do
 ```text
 config/       transforms and input-only transect geometry
 data/         released image inputs
-provenance/   frozen selection record and checksums
+provenance/   input checksums and reproducibility boundaries
 results/      regenerated tables and standalone PNG figures
 src/          preparation, analysis, robustness, and figure scripts
 verify_release.py  release integrity and numerical validation
