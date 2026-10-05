@@ -19,4 +19,6 @@ class CoreScopeTests(unittest.TestCase):
     def test_sources_have_no_personal_filesystem_roots(self):
         pattern = re.compile(rb'[A-Za-z]:[\\/]+Users[\\/]+|/(?:home|Users)/', re.I)
         for path in REPO.rglob('*.py'):
+            if any(part in {'.venv', 'venv', '.git', '__pycache__', '.pytest_cache'} for part in path.relative_to(REPO).parts):
+                continue
             self.assertIsNone(pattern.search(path.read_bytes()), str(path.relative_to(REPO)))
