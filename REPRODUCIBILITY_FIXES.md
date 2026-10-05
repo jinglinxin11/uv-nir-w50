@@ -1,5 +1,10 @@
 # Reproduction integrity fixes, 5 October 2026
 
+The naming/structure follow-up provides `manuscript_figure_map.json` and a README
+table mapping the historical S9-S12 output suffixes to the current merged
+manuscript's detailed Figs. 14-17. Historical files and scientific arrays remain
+unchanged; final-number delivery copies are byte-identical to their sources.
+
 This additive maintenance revision changes verification only. The quantitative
 measurement implementation, frozen geometry, registration settings and images
 are unchanged. It retains the manuscript's expected numerical targets and

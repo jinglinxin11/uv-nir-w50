@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "source_path_base": "repository_root",
+  "scope": "Current supplementary manuscript numbering; historical filenames remain unchanged. Mapping by scientific content does not assert DOCX pixel identity.",
+  "figures": [
+    {"figure": 14, "source": "results/figures/Figure_S9_profiles_all.png", "export_name": "Supplementary_Figure_14.png"},
+    {"figure": 15, "source": "results/figures/Figure_S10_representative_W50_X04.png", "export_name": "Supplementary_Figure_15.png"},
+    {"figure": 16, "source": "results/figures/Figure_S11_PNR_validity_publication.png", "export_name": "Supplementary_Figure_16.png"},
+    {"figure": 17, "source": "results/figures/Figure_S12_smoothing_combined.png", "export_name": "Supplementary_Figure_17.png"}
+  ]
+}

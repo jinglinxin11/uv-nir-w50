@@ -47,6 +47,26 @@ The primary profile channel is CIE Lab a*. `verify_release.py` checks the input 
 
 ## Output map
 
+### Current manuscript numbering
+
+Historical output names are retained for compatibility. In the current merged
+Supplementary Information, the detailed five-transect figures are numbered
+14-17, not the historical S9-S12 suffixes in the filenames:
+
+| Current manuscript figure | Historical output |
+| --- | --- |
+| Fig. 14 | `Figure_S9_profiles_all.png` |
+| Fig. 15 | `Figure_S10_representative_W50_X04.png` |
+| Fig. 16 | `Figure_S11_PNR_validity_publication.png` |
+| Fig. 17 | `Figure_S12_smoothing_combined.png` |
+
+All files above are under `results/figures/`. The X04 `*_diagnostic.png` is an
+additional diagnostic variant, not the primary Fig. 15 export. The machine-readable
+[figure map](manuscript_figure_map.json) supplies final-number export names.
+This is a content/implementation mapping, not a claim of pixel identity to every
+embedded Word figure. Historical files and numerical outputs are not renamed.
+See [maintenance fixes](REPRODUCIBILITY_FIXES.md).
+
 | Output(s) | Generating script | Purpose |
 | --- | --- | --- |
 | `registration_reconstruction.json`, `Registration_QC.png` | `src/estimate_registration.py` | Re-estimated NIR transform, frozen-transform comparison, feature/RANSAC and phase-correlation registration QC |
