@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+.pytest_cache/
+# Existing tracked release artifacts remain; newly regenerated extras stay local.
+results/
